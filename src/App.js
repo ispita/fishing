@@ -6,8 +6,6 @@ class App extends Component {
     fish: []
   };
 
-  test
-
   componentDidMount() {
     this.getFish();
   }
