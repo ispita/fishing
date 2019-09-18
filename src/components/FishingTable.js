@@ -12,7 +12,9 @@ class FishingTable extends Component {
 
       fish_name: "",
       catch_date: "",
-      fish_weight: ""
+      fish_weight: "",
+      pk_fish: "",
+      toggleEdit: "false"
     };
   }
   componentDidMount() {
@@ -36,21 +38,51 @@ class FishingTable extends Component {
     this.setState({ fish_weight: "" });
   };
 
+  removefishes = e => {
+    this.setState({ pk_fish: e.target.value }, () => {
+      fetch(
+        `http://192.168.1.147:3001/posts/remove?pk_fish=${this.state.pk_fish}`
+      ).then(this.getfishes);
+    });
+  };
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
     console.log(e.target.value);
   };
 
+  toggleEditFishes = e => {
+    this.setState({ toggleEdit: "true" });
+  };
   render() {
     let fishes = this.state.fishes.map(fishes => {
       return (
         <tr key={fishes.pk_fish}>
-          <td>{fishes.pk_fish}</td>
-          <td>{fishes.fish_name}</td>
-          <td>{fishes.catch_date}</td>
-          <td>{fishes.fish_weight}</td>
-          <Edit />
-          <Delete />
+          <td>
+            <div>{fishes.pk_fish}</div>
+          </td>
+          <td>
+            <div contentEditable={this.state.toggleEdit}>
+              {fishes.fish_name}
+            </div>
+          </td>
+          <td>
+            <div contentEditable={this.state.toggleEdit}>
+              {fishes.catch_date}
+            </div>
+          </td>
+          <td>
+            <div contentEditable={this.state.toggleEdit}>
+              {fishes.fish_weight}
+            </div>
+          </td>
+          <Button value={fishes.pk_fish} onClick={this.toggleEditFishes}>
+            EDIT
+          </Button>
+          <Button value={fishes.pk_fish} onClick={this.removefishes}>
+            DELETE
+          </Button>
+          {/* <Delete value={fishes.pk_fish} onClick={this.removefishes} /> */}
         </tr>
       );
     });
