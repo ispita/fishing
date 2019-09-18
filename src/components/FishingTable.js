@@ -9,11 +9,10 @@ class FishingTable extends Component {
 
     this.state = {
       fishes: [],
-      fish: {
-        fish_name: "",
-        catch_date: "",
-        fish_weight: ""
-      }
+
+      fish_name: "",
+      catch_date: "",
+      fish_weight: ""
     };
   }
   componentDidMount() {
@@ -28,14 +27,17 @@ class FishingTable extends Component {
 
   addfishes = _ => {
     fetch(
-      `http://192.168.1.147:3001/posts/add?fish_name=${this.state.fish.fish_name}&catch_date=${this.state.fish.catch_date}&fish_weight=${this.state.fish.fish_weight}`
+      `http://192.168.1.147:3001/posts/add?fish_name=${this.state.fish_name}&catch_date=${this.state.catch_date}&fish_weight=${this.state.fish_weight}`
     )
       .then(this.getfishes)
       .catch(err => console.error(err));
+    this.setState({ fish_name: "" });
+    this.setState({ catch_date: "" });
+    this.setState({ fish_weight: "" });
   };
 
   handleChange = e => {
-    this.setState({ fish: { [e.target.name]: e.target.value } });
+    this.setState({ [e.target.name]: e.target.value });
     console.log(e.target.value);
   };
 
@@ -56,19 +58,19 @@ class FishingTable extends Component {
       <div className="App">
         <Input
           placeholder="Enter a Fish Specie"
-          value={this.state.fish.fish_name}
+          value={this.state.fish_name}
           name="fish_name"
           onChange={this.handleChange}
         />
         <Input
           placeholder="Enter a Catch Date"
-          value={this.state.fish.catch_date}
+          value={this.state.catch_date}
           name="catch_date"
           onChange={this.handleChange}
         />
         <Input
           placeholder="Enter a Fish Weight"
-          value={this.state.fish.fish_weight}
+          value={this.state.fish_weight}
           name="fish_weight"
           onChange={this.handleChange}
         />
