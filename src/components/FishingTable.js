@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Table, Input, Button } from "semantic-ui-react";
 import Edit from "./subcomponents/Edit";
 import Delete from "./subcomponents/Delete";
+import Fish from "./subcomponents/Fish";
 
 class FishingTable extends Component {
   constructor(props) {
@@ -13,8 +14,7 @@ class FishingTable extends Component {
       fish_name: "",
       catch_date: "",
       fish_weight: "",
-      pk_fish: "",
-      toggleEdit: "false"
+      pk_fish: ""
     };
   }
   componentDidMount() {
@@ -48,44 +48,9 @@ class FishingTable extends Component {
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(e.target.value);
   };
 
-  toggleEditFishes = e => {
-    this.setState({ toggleEdit: "true" });
-  };
   render() {
-    let fishes = this.state.fishes.map(fishes => {
-      return (
-        <tr key={fishes.pk_fish}>
-          <td>
-            <div>{fishes.pk_fish}</div>
-          </td>
-          <td>
-            <div contentEditable={this.state.toggleEdit}>
-              {fishes.fish_name}
-            </div>
-          </td>
-          <td>
-            <div contentEditable={this.state.toggleEdit}>
-              {fishes.catch_date}
-            </div>
-          </td>
-          <td>
-            <div contentEditable={this.state.toggleEdit}>
-              {fishes.fish_weight}
-            </div>
-          </td>
-          <Button value={fishes.pk_fish} onClick={this.toggleEditFishes}>
-            EDIT
-          </Button>
-          <Button value={fishes.pk_fish} onClick={this.removefishes}>
-            DELETE
-          </Button>
-          {/* <Delete value={fishes.pk_fish} onClick={this.removefishes} /> */}
-        </tr>
-      );
-    });
     return (
       <div className="App">
         <Input
@@ -117,7 +82,15 @@ class FishingTable extends Component {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>{fishes}</tbody>
+          <tbody>
+            {this.state.fishes.map(fish => (
+              <Fish
+                fishes={fish}
+                toggleEditFishes={this.toggleEditFishes}
+                removefishes={this.removefishes}
+              />
+            ))}
+          </tbody>
         </Table>
       </div>
     );
