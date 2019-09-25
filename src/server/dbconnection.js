@@ -41,9 +41,9 @@ app.get("/posts/remove", (req, res) => {
 });
 
 app.get("/posts/edit", (req, res) => {
-  const { pk_fish } = req.query;
-  const REMOVE_FISH_CATCH = `UPDATE catches SET fish_name = '${fish_name}', catch_date = '${catch_date}', fish_weight = '${fish_weight} WHERE pk_fish = ('${pk_fish}')`;
-  con.query(REMOVE_FISH_CATCH, err => {
+  const { fish_name, catch_date, fish_weight, pk_fish } = req.query;
+  const EDIT_FISH_CATCH = `UPDATE catches SET fish_name = '${fish_name}', catch_date = '${catch_date}', fish_weight = '${fish_weight}' WHERE pk_fish = ('${pk_fish}')`;
+  con.query(EDIT_FISH_CATCH, err => {
     if (err) throw err;
     else {
       res.send("successfully edited fish catch!");
