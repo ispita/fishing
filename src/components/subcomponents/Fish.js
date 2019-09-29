@@ -81,9 +81,6 @@ class Fish extends Component {
         bgcolor={this.state.bgcolor}
         name="fishrow"
       >
-        <td>
-          <div>{this.props.fishes.pk_fish}</div>
-        </td>
         <td name="fish_name">
           <div
             suppressContentEditableWarning={true}
@@ -124,6 +121,7 @@ class Fish extends Component {
             {this.state.fish_length}
           </div>
         </td>
+        <td>pictures</td>
         <td>
           <Button
             color={this.state.editColor}

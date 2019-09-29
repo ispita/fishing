@@ -38,7 +38,6 @@ class FishingTable extends Component {
             inverted
             vertical
             visible={this.state.visible}
-            width="150px"
           >
             <AddFish getfishes={this.getfishes} />
           </Sidebar>
@@ -47,11 +46,11 @@ class FishingTable extends Component {
               <Table celled>
                 <Table.Header>
                   <tr>
-                    <th>Fish ID</th>
                     <th>Fish Name</th>
                     <th>Catch Date</th>
                     <th>Fish Weight</th>
                     <th>Fish Length</th>
+                    <th>Picture</th>
                     <th>Actions</th>
                   </tr>
                 </Table.Header>
