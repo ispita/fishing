@@ -19,8 +19,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/posts/add", (req, res) => {
-  const { fish_name, catch_date, fish_weight } = req.query;
-  const INSERT_FISH_CATCH = `INSERT INTO catches(fish_name,catch_date,fish_weight) VALUES('${fish_name}','${catch_date}','${fish_weight}')`;
+  const { fish_name, catch_date, fish_weight, fish_length } = req.query;
+  const INSERT_FISH_CATCH = `INSERT INTO catches(fish_name,catch_date,fish_weight,fish_length) VALUES('${fish_name}','${catch_date}','${fish_weight}','${fish_length}')`;
   con.query(INSERT_FISH_CATCH, err => {
     if (err) throw err;
     else {
@@ -41,8 +41,14 @@ app.get("/posts/remove", (req, res) => {
 });
 
 app.get("/posts/edit", (req, res) => {
-  const { fish_name, catch_date, fish_weight, pk_fish } = req.query;
-  const EDIT_FISH_CATCH = `UPDATE catches SET fish_name = '${fish_name}', catch_date = '${catch_date}', fish_weight = '${fish_weight}' WHERE pk_fish = ('${pk_fish}')`;
+  const {
+    fish_name,
+    catch_date,
+    fish_weight,
+    fish_length,
+    pk_fish
+  } = req.query;
+  const EDIT_FISH_CATCH = `UPDATE catches SET fish_name = '${fish_name}', catch_date = '${catch_date}', fish_weight = '${fish_weight}', fish_length ='${fish_length}' WHERE pk_fish = ('${pk_fish}')`;
   con.query(EDIT_FISH_CATCH, err => {
     if (err) throw err;
     else {

@@ -9,10 +9,11 @@ class Fish extends Component {
       editButton: "EDIT",
       deleteButton: true,
       editColor: "grey",
-      bgcolor: "white",
+      bgcolor: "",
       fish_name: this.props.fishes.fish_name,
       catch_date: this.props.fishes.catch_date,
-      fish_weight: this.props.fishes.fish_weight
+      fish_weight: this.props.fishes.fish_weight,
+      fish_length: this.props.fishes.fish_length
     };
   }
 
@@ -25,16 +26,25 @@ class Fish extends Component {
   };
 
   cancel = e => {
-    this.setState(prevState => ({
-      toggleEdit: !prevState.toggleEdit,
-      deleteButton: !prevState.deleteButton,
-      fish_name: this.props.fishes.fish_name,
-      catch_date: this.props.fishes.catch_date,
-      fish_weight: this.props.fishes.fish_weight,
-      editButton: "EDIT",
-      editColor: "grey",
-      bgcolor: "white"
-    }));
+    console.log("canceled");
+    this.setState(
+      (prevState, prevProps) => ({
+        toggleEdit: !prevState.toggleEdit,
+        deleteButton: !prevState.deleteButton,
+
+        editButton: "EDIT",
+        editColor: "grey",
+        bgcolor: "white"
+      }),
+      () => {
+        this.setState({
+          fish_name: this.props.fishes.fish_name,
+          catch_date: this.props.fishes.catch_date,
+          fish_weight: this.props.fishes.fish_weight,
+          fish_length: this.props.fishes.fish_length
+        });
+      }
+    );
   };
 
   toggleEditFishes = e => {
@@ -50,7 +60,7 @@ class Fish extends Component {
       });
     } else {
       fetch(
-        `http://192.168.1.147:3001/posts/edit?fish_name=${this.state.fish_name}&catch_date=${this.state.catch_date}&fish_weight=${this.state.fish_weight}&pk_fish=${this.props.fishes.pk_fish}`
+        `http://192.168.1.147:3001/posts/edit?fish_name=${this.state.fish_name}&catch_date=${this.state.catch_date}&fish_weight=${this.state.fish_weight}&fish_length=${this.state.fish_length}&pk_fish=${this.props.fishes.pk_fish}`
       ).then(
         this.setState({
           editButton: "EDIT",
@@ -69,7 +79,7 @@ class Fish extends Component {
       <tr
         key={this.props.fishes.pk_fish}
         bgcolor={this.state.bgcolor}
-        name="fishtest"
+        name="fishrow"
       >
         <td>
           <div>{this.props.fishes.pk_fish}</div>
@@ -81,7 +91,7 @@ class Fish extends Component {
             contentEditable={this.state.toggleEdit}
             onBlur={this.handleChange}
           >
-            {this.props.fishes.fish_name}
+            {this.state.fish_name}
           </div>
         </td>
         <td>
@@ -91,7 +101,7 @@ class Fish extends Component {
             contentEditable={this.state.toggleEdit}
             onBlur={this.handleChange}
           >
-            {this.props.fishes.catch_date}
+            {this.state.catch_date}
           </div>
         </td>
         <td>
@@ -101,7 +111,17 @@ class Fish extends Component {
             contentEditable={this.state.toggleEdit}
             onBlur={this.handleChange}
           >
-            {this.props.fishes.fish_weight}
+            {this.state.fish_weight}
+          </div>
+        </td>
+        <td>
+          <div
+            suppressContentEditableWarning={true}
+            name="fish_length"
+            contentEditable={this.state.toggleEdit}
+            onBlur={this.handleChange}
+          >
+            {this.state.fish_length}
           </div>
         </td>
         <td>
